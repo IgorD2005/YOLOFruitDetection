@@ -1,38 +1,122 @@
-YOLOv8 Fruit Detection
+# YOLOv8 Fruit Detection
 
-A real-time object detection system built on YOLOv8, fine-tuned to detect four fruit categories in images and video streams. Developed as part of a computer vision course.
+A real-time object detection system built on **YOLOv8**, fine-tuned to detect four fruit categories in images and video streams. Developed as part of a computer vision course.
 
-Model
+---
 
-YOLOv8n (nano) was selected as the base model and fine-tuned on a custom fruit dataset sourced from Roboflow. Training ran for up to 20 epochs with a confidence threshold of 0.5 applied during inference. The fine-tuned weights are saved to runs/detect/train/weights/best.pt upon completion.
-Classes: apple, banana, pineapple, strawberry
+## Model
 
-Features
+The project uses **YOLOv8n (Nano)** as the base model, which was fine-tuned on a custom fruit dataset sourced from **Roboflow**.
 
-Detection is supported across three input modes: static images, video files, and live camera streams. A side-by-side comparison mode allows the base and fine-tuned models to be evaluated on the same input simultaneously. Bounding boxes, class labels, and confidence scores are rendered directly onto each frame, with a per-class colour scheme generated deterministically from the class index.
+### Training Configuration
 
-Dataset
+- **Base Model:** YOLOv8n
+- **Training Epochs:** Up to 20
+- **Confidence Threshold:** `0.5` (during inference)
+- **Output Weights:** `runs/detect/train/weights/best.pt`
 
-Annotation was performed in YOLO format, with each label file containing normalised bounding box coordinates alongside a class identifier. The dataset configuration is defined in data.yaml and follows the standard Ultralytics directory structure, with separate image and label folders for training and validation subsets.
+### Detected Classes
 
-Project Structure
+- 🍎 Apple
+- 🍌 Banana
+- 🍍 Pineapple
+- 🍓 Strawberry
 
-lab6.py - full pipeline: detection, training, comparison, and video processing
+---
 
-data.yaml - dataset configuration for Ultralytics
+## Features
 
-runs/detect/train/ - training outputs including metrics and visualisations
+The application supports object detection in multiple input modes:
 
-.gitignore - excludes model weights and raw image data
+- 🖼️ Static images
+- 🎥 Video files
+- 📷 Live camera stream
 
-Requirements:
-ultralytics,
-opencv-python,
-numpy.
+Additional functionality includes:
 
-Usage
+- Side-by-side comparison between the **base** and **fine-tuned** models
+- Real-time rendering of:
+  - Bounding boxes
+  - Class labels
+  - Confidence scores
+- Deterministic per-class color generation based on class index
 
-Detection on image: python lab6.py --model yolov8n.pt --image path/to/image.jpg
-Detection from camera: python lab6.py --model yolov8n.pt --camera
-Fine-tuning: python lab6.py --model yolov8n.pt --train --train-data dataset/data.yaml
-Compare models: python lab6.py --model yolov8n.pt --trained-model best.pt --compare --image path/to/image.jpg
+---
+
+## Dataset
+
+The dataset follows the standard **Ultralytics YOLO** directory structure.
+
+Annotations are stored in **YOLO format**, where each label file contains:
+
+- Class identifier
+- Normalized bounding box coordinates
+
+The dataset configuration is defined in:
+
+```text
+data.yaml
+```
+
+Dataset structure:
+
+- `train/images`
+- `train/labels`
+- `valid/images`
+- `valid/labels`
+
+---
+
+## Project Structure
+
+```text
+.
+├── lab6.py                     # Detection, training, comparison, and video processing
+├── data.yaml                   # Dataset configuration
+├── runs/
+│   └── detect/
+│       └── train/              # Training outputs, metrics, and visualizations
+└── .gitignore                  # Excludes model weights and raw datasets
+```
+
+---
+
+## Requirements
+
+- Ultralytics
+- OpenCV (`opencv-python`)
+- NumPy
+
+Install dependencies:
+
+```bash
+pip install ultralytics opencv-python numpy
+```
+
+---
+
+## Usage
+
+### Detect objects in an image
+
+```bash
+python lab6.py --model yolov8n.pt --image path/to/image.jpg
+```
+
+### Detect objects from a live camera
+
+```bash
+python lab6.py --model yolov8n.pt --camera
+```
+
+### Fine-tune the model
+
+```bash
+python lab6.py --model yolov8n.pt --train --train-data dataset/data.yaml
+```
+
+### Compare the base and fine-tuned models
+
+```bash
+python lab6.py --model yolov8n.pt --trained-model best.pt --compare --image path/to/image.jpg
+```
